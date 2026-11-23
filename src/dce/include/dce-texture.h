@@ -45,7 +45,7 @@ unsigned short DCE_TextureHeight(unsigned short index);
 
 unsigned int DCE_TextureSize(unsigned short index);
 
-void DCE_TextureDownsampleHalfSize(uint16 *src, uint16 *dst, uint16 width, uint16 height);
+void DCE_TextureDownsampleHalfSize(uint16_t *src, uint16_t *dst, uint16_t width, uint16_t height);
 
 void DCE_TextureCoordProjected(vec3f_t *eye, vec3f_t *point, vec3f_t *normal,
                         float *s, float *t);
@@ -54,9 +54,9 @@ void DCE_TextureCoordProjectedFast(vec3f_t *point, float *s, float *t);
 
 unsigned int DCE_TextureSample2D565(unsigned short int * buf, unsigned short int w, unsigned short int h,
                                     float u, float v);
-uint16 * DCE_TextureLoadJPGBuf(char *fname, unsigned short int * w, unsigned short int * h);
+uint16_t * DCE_TextureLoadJPGBuf(char *fname, unsigned short int * w, unsigned short int * h);
 
-uint16 DCE_TextureLoadTGA1555(char * fname);
+uint16_t DCE_TextureLoadTGA1555(char * fname);
 
 void DCE_LoadTextureBatch(char * dir);
 

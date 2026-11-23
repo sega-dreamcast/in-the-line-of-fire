@@ -13,17 +13,11 @@
 
 #include <kos/mutex.h>
 
-mutex_t * mpa_mut;
-#define MPA_create_mutex()  { mpa_mut = mutex_create(); }
-#define MPA_lock_mutex()    { mutex_lock( mpa_mut );    }
-#define MPA_unlock_mutex()  { mutex_unlock( mpa_mut );  }
-#define MPA_destroy_mutex() { mutex_destroy( mpa_mut ); }
-
-volatile unsigned char MP3_NEED_SAMPLES;
+extern volatile unsigned char MP3_NEED_SAMPLES;
 
 int LibMPG123_Init();
 
-int LibMPG123_DecodeChunk( uint8 * mpabuf, int size );
+int LibMPG123_DecodeChunk( uint8_t * mpabuf, int size );
 
 int LibMPG123_Exit();
 

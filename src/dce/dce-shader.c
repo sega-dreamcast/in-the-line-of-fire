@@ -164,7 +164,7 @@ unsigned char DCE_ShaderEntryParse(DCE_Shader * shader, char * buf)
 	return 0;
 }
 
-uint16 DCE_TextureShaderLookUp(char * tex_name)
+uint16_t DCE_TextureShaderLookUp(char * tex_name)
 {
 	int i;
 	
@@ -175,12 +175,12 @@ uint16 DCE_TextureShaderLookUp(char * tex_name)
     return 0;
 }
 
-ubyte DCE_ShaderSurface(uint16 index)
+ubyte DCE_ShaderSurface(uint16_t index)
 {
 	return shader[index - 1]->surface_type;
 }
 
-void DCE_ApplyShader(uint16 index, DCE_SimpleVertex * vert, unsigned int count)
+void DCE_ApplyShader(uint16_t index, DCE_SimpleVertex * vert, unsigned int count)
 {
 	DCE_Shader * s = shader[index - 1];
 	

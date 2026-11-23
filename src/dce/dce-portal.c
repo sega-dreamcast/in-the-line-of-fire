@@ -192,7 +192,7 @@ void DCE_PortalRenderPortalTex(DCE_Portal * portal, unsigned short texID)
 		float s = 60;
         float s2 = s / 2;
 
-		uint32 argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+		uint32_t argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 		                  0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 
 		vec3f_t p;
@@ -230,7 +230,7 @@ void DCE_PortalRenderPortalTex(DCE_Portal * portal, unsigned short texID)
 		float s = 60;
 		float s2 = s / 2;
 
-		uint32 argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+		uint32_t argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 		                  0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 
 		vec3f_t p;
@@ -352,7 +352,7 @@ void DCE_PortalRender(DCE_Portal * portal, unsigned short texID)
 		vec3f_add(&portal[DCE_PORTAL_SRC].position, &portal[DCE_PORTAL_SRC].direction, &p);
 		vec3f_add(&p, &portal[DCE_PORTAL_SRC].direction, &p);
 
-		uint32 argb[] = { 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF };
+		uint32_t argb[] = { 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF };
 		/*
 		DCE_RenderTesselateDecal(&p, 80.0f, &portal[DCE_PORTAL_SRC].direction, texID, 1, 1, 0xFF00FFFF);
 		*/
@@ -368,7 +368,7 @@ void DCE_PortalRender(DCE_Portal * portal, unsigned short texID)
 		vec3f_add(&portal[DCE_PORTAL_DST].position, &portal[DCE_PORTAL_DST].direction, &p);
 		vec3f_add(&p, &portal[DCE_PORTAL_DST].direction, &p);
 
-		uint32 argb[] = { 0xFFFF0909, 0xFFFF0909, 0xFFFF0909, 0xFFFF0909 };
+		uint32_t argb[] = { 0xFFFF0909, 0xFFFF0909, 0xFFFF0909, 0xFFFF0909 };
 		/*
 		DCE_RenderTesselateDecal(&p, 80.0f, &portal[DCE_PORTAL_DST].direction, texID, 1, 1, 0xFFFF0909);
 		*/
@@ -392,7 +392,7 @@ void DCE_PortalRenderSRC(DCE_Portal * portal, unsigned short texID)
 		vec3f_add(&portal[DCE_PORTAL_SRC].position, &portal[DCE_PORTAL_SRC].direction, &p);
 		vec3f_add(&p, &portal[DCE_PORTAL_SRC].direction, &p);
 
-		uint32 argb[] = { 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF };
+		uint32_t argb[] = { 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF };
 		
 		DCE_PortalR2(&p, 90.0f, (unsigned int *)argb, texID, rotf);
 		DCE_PortalR2(&p, 90.0f, (unsigned int *)argb, texID, rotf / 2);
@@ -409,7 +409,7 @@ void DCE_PortalRenderDST(DCE_Portal * portal, unsigned short texID)
 		vec3f_add(&portal[DCE_PORTAL_DST].position, &portal[DCE_PORTAL_DST].direction, &p);
 		vec3f_add(&p, &portal[DCE_PORTAL_DST].direction, &p);
 
-		uint32 argb[] = { 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF };
+		uint32_t argb[] = { 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF, 0xFF00FFFF };
 		
 		DCE_PortalR2(&p, 90.0f, (unsigned int *)argb, texID, rotf);
 		DCE_PortalR2(&p, 90.0f, (unsigned int *)argb, texID, rotf / 2);
@@ -423,7 +423,7 @@ void DCE_PortalRenderPortalTexSRC(DCE_Portal * portal, unsigned short texID)
 		float s = 50;
         float s2 = s / 2;
 
-		uint32 argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+		uint32_t argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 		                  0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 
 		vec3f_t p;
@@ -463,7 +463,7 @@ void DCE_PortalRenderPortalTexDST(DCE_Portal * portal, unsigned short texID)
 		float s = 50;
 		float s2 = s / 2;
 
-		uint32 argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+		uint32_t argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 		                  0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 
 		vec3f_t p;
@@ -508,7 +508,7 @@ void DCE_PortalRenderPlayer(DCE_Player * player, unsigned short texID)
 		                { p->x - s, p->y - s, p->z },
 		                { p->x + s, p->y - s, p->z} };  
 
-	uint32 argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+	uint32_t argb[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 
     float uv[] = { 0, 0, 1, 0, 0, 1, 1, 1 };
 

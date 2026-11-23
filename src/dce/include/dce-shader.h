@@ -32,9 +32,9 @@ typedef struct
 } DCE_Shader;
 
 void DCE_LoadShader(char * fname);
-uint16 DCE_TextureShaderLookUp(char * tex_name);
-void DCE_ApplyShader(uint16 index, DCE_SimpleVertex * vert, unsigned int count);
-ubyte DCE_ShaderSurface(uint16 index);
+uint16_t DCE_TextureShaderLookUp(char * tex_name);
+void DCE_ApplyShader(uint16_t index, DCE_SimpleVertex * vert, unsigned int count);
+ubyte DCE_ShaderSurface(uint16_t index);
 
 unsigned char DCE_ShaderSeekNextEntry(FILE * f, char * buf);
 

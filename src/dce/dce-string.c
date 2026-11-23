@@ -4,9 +4,9 @@
 
 #include "dce.h"
 
-uint16 DCE_StringFindCharFirst(char * string, char c)
+uint16_t DCE_StringFindCharFirst(char * string, char c)
 {
-	uint16 i = 0;
+	uint16_t i = 0;
 	for(i = 0; i < strlen(string); i++)
 	    if(string[i] == c)
 	        return i;
@@ -15,7 +15,7 @@ uint16 DCE_StringFindCharFirst(char * string, char c)
 
 void DCE_StringCopyNoExt(char * dst, char * src)
 {
-   	uint16 slen = DCE_StringFindCharFirst(src, '.');
+   	uint16_t slen = DCE_StringFindCharFirst(src, '.');
 	
 	strncpy(dst, src, slen);	
 	
@@ -24,7 +24,7 @@ void DCE_StringCopyNoExt(char * dst, char * src)
 
 void DCE_StringCopyNewExt(char * dst, char * src, char * ext)
 {
-   	uint16 slen = DCE_StringFindCharFirst(src, '.');
+   	uint16_t slen = DCE_StringFindCharFirst(src, '.');
 	
 	strncpy(dst, src, slen);	
 	
@@ -33,9 +33,9 @@ void DCE_StringCopyNewExt(char * dst, char * src, char * ext)
 	strcat(dst, ext);
 }
 
-void DCE_StringHasExt(char * src, char * ext)
+unsigned char DCE_StringHasExt(char * src, char * ext)
 {
-   	uint16 slen = DCE_StringFindCharFirst(src, '.');
+   	uint16_t slen = DCE_StringFindCharFirst(src, '.');
 	
 	return src[slen + 1] == ext[0] && src[slen + 2] == ext[1] && src[slen + 3] == ext[2];
 }

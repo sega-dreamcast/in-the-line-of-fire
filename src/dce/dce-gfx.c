@@ -11,7 +11,7 @@
 
 /******************************************************************************/
 
-static uint16 texture[32];
+static uint16_t texture[32];
 static Font * font;
 
 unsigned short int DCE_TexID(unsigned short GFX)

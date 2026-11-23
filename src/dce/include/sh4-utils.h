@@ -2,13 +2,13 @@
 #define SH4_UTILS_H
 
 typedef struct {
-    uint32  flags;              /**< \brief TA command (vertex flags) */
+    uint32_t  flags;              /**< \brief TA command (vertex flags) */
     float   x;                  /**< \brief X coordinate */
     float   y;                  /**< \brief Y coordinate */
     float   z;                  /**< \brief Z coordinate */
     float   u;                  /**< \brief Texture U coordinate */
     float   v;                  /**< \brief Texture V coordinate */
-    uint32  argb;               /**< \brief Vertex color */
+    uint32_t  argb;               /**< \brief Vertex color */
     float   w;                  /**< \brief Vertex W coordinate */
 } gl_pvr_vertex_t;
 

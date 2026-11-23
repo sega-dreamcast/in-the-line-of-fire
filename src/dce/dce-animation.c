@@ -48,7 +48,7 @@ unsigned int DCE_AnimationFrame()
 
 static unsigned short int MuzzleFlashIndex = 0;
 static HUD_Sprite * sprite;
-static uint16 muzTexID = 0;
+static uint16_t muzTexID = 0;
 
 void DCE_HudSetMuzzleFlash()
 {

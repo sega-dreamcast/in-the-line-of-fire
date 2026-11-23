@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <kos/thread.h>
 #include "stdio.h"
 
 #include "mpg123.h"
@@ -26,6 +27,8 @@
 #include "AudioStreamBuffer.h"
 
 /* Global variables for the LibMPG123 decoder */
+volatile unsigned char MP3_NEED_SAMPLES;
+
 static mpg123_handle * mh = NULL;
 
 static int enc, err;
@@ -97,7 +100,7 @@ void LibMPG123_VolumeDown()
 }
 
 /* Decode a chunk of MPEG Audio, given a bitstream buffer and its size */
-int LibMPG123_DecodeChunk( uint8 * mpabuf, int size )
+int LibMPG123_DecodeChunk( uint8_t * mpabuf, int size )
 {
     err = mpg123_decode(mh, mpabuf, size, wave_buffer, 163840, &sndhnd->samples_done);
     

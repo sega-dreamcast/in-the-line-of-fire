@@ -6,10 +6,11 @@
 #include <kos.h>
 
 #include "dce-sfx.h"
+#include "dce-timer.h"
 #include "dce-menu.h"
 #include "dce-player.h"
 
-static uint32 DCE_SFX[DCE_MAX_SOUND_EFFECTS];
+static uint32_t DCE_SFX[DCE_MAX_SOUND_EFFECTS];
 
 static DCE_Sfx DCE_STREAMFX[DCE_MAX_SOUND_EFFECTS];
 
@@ -99,22 +100,22 @@ void DCE_InitSfx()
 //	DCE_SFX[PLAYER_LOW_HEALTH] = snd_sfx_load_ex("/cd/sound/player/FPlowhealthheavybreath.adp");   
 }
 
-void DCE_SfxStop(uint32 sfx)
+void DCE_SfxStop(uint32_t sfx)
 {
 	snd_sfx_stop(DCE_SFX[sfx]);
 }
 
-void DCE_SfxPlay(uint32 sfx)
+void DCE_SfxPlay(uint32_t sfx)
 {
     snd_sfx_play(DCE_SFX[sfx], DCE_SfxVolume(), DCE_SFX_CHAN_STEREO);
 }
 
-void DCE_SfxPlayHalfVolume(uint32 sfx)
+void DCE_SfxPlayHalfVolume(uint32_t sfx)
 {
     snd_sfx_play(DCE_SFX[sfx], DCE_SfxVolume() / 2, DCE_SFX_CHAN_STEREO);
 }
 
-void DCE_SfxPlayAttenuation(uint32 sfx, vec3f_t * O, vec3f_t * P)
+void DCE_SfxPlayAttenuation(uint32_t sfx, vec3f_t * O, vec3f_t * P)
 {
     float d;
     
@@ -128,7 +129,7 @@ void DCE_SfxPlayAttenuation(uint32 sfx, vec3f_t * O, vec3f_t * P)
 	snd_sfx_play(DCE_SFX[sfx], v, DCE_SFX_CHAN_STEREO);
 }
 
-void DCE_SfxPlayAttenuationPan(uint32 sfx, vec3f_t *s, vec3f_t * d, float di)
+void DCE_SfxPlayAttenuationPan(uint32_t sfx, vec3f_t *s, vec3f_t * d, float di)
 {
     if(di > DCE_MAX_VOL_ATTENUATION)
         return;  // Too Quiet To be Heard - Dont Even Bother Playing SFX at 0 volume

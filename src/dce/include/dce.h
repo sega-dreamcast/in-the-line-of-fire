@@ -5,7 +5,11 @@
 #ifndef DCE_H
 #define DCE_H
 
+#include <kos.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <dc/fmath.h>
 #include <dc/matrix.h>
 #include <dc/matrix3d.h>
@@ -55,13 +59,34 @@ int DCE_RestartLevel(char * null);
 
 void DCE_StringCopyNoExt(char * dst, char * src);
 void DCE_StringCopyNewExt(char * dst, char * src, char * ext);
-void DCE_StringHasExt(char * src, char * ext);
-uint16 DCE_StringFindCharFirst(char * string, char c);
+unsigned char DCE_StringHasExt(char * src, char * ext);
+uint16_t DCE_StringFindCharFirst(char * string, char c);
 unsigned char DCE_StringEqualsIgnoreCase(char * src, char * dst);
 
 void DCE_PreComputeMD2VertexFlags();
 void DCE_PlayerCollisionCallback(DCE_Player * player);
 
 void DCE_RenderHurtScreenEffect(unsigned char id, unsigned char frames);
+
+/* Functions defined in one module and used by others */
+void DCE_RenderCallback(DCE_Player * player, DCE_Camera * cam, float t);
+void DCE_RenderCallbackOP(DCE_Player * player, DCE_Camera * cam, float t, uint8_t index);
+void DCE_RenderCallbackPT(DCE_Player * player, DCE_Camera * cam, float t, uint8_t index);
+void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8_t index);
+void DCE_PlayerFrameCallback(DCE_Player * player, DCE_Camera * cam, uint8_t index);
+void DCE_PlayerTracePlayerRay(DCE_Player * player);
+void DCE_RenderEnemyLOD(DCE_Player * player, DCE_Player * player2);
+void DCE_RenderModelPlayerTR(DCE_Player * player);
+void DCE_RenderMD2ComputeMatrixS(DCE_Player * player, struct hqmd2_frame_t *pframe, float r);
+void DCE_SetCBOIndex(unsigned char index);
+unsigned char DCE_LoadCBOInstance(char * fname, unsigned char active, char * segment,
+                                  DCE_RenderObjectInstance * instance, unsigned char instances);
+void DCE_LoadCBOCluster(char * fname);
+void DCE_LoadRBOBatch(char * fname);
+void DCE_LoadEnemyModels();
+unsigned char DCE_ShaderParseToken(char * buf);
+int DCE_InputCallbackWaitHack(DCE_Player * p);
+void DCE_RunExecutionSequence(DCE_Player * p, DCE_Camera * c);
+void DCE_SetVolumeCDDA(unsigned char vol);
 
 #endif

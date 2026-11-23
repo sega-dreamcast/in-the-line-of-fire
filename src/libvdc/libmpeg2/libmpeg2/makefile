@@ -22,7 +22,8 @@ OBJS += convert/rgb.o
 OBJS += convert/uyvy.o
 
 INCS += -I. -DLITTLE_ENDIAN=1
-CFLAGS += -O3 -m4-single-only -ffast-math
+# Note: do not force an FPU ABI here (e.g. -m4-single-only); use the one KOS was built with
+CFLAGS += -O3 -ffast-math
 
 all: libmpeg2.a
 
@@ -30,3 +31,6 @@ libmpeg2.a: $(OBJS)
 	$(KOS_AR) rcs libmpeg2.a $(OBJS)
 
 include $(KOS_BASE)/Makefile.rules
+
+clean:
+	-rm -f libmpeg2.a $(filter %.o,$(OBJS))

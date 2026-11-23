@@ -193,12 +193,12 @@ unsigned char DCE_MenuRenderStatsMenu(unsigned char input, float * s, unsigned c
     		break;
 	}
     
-    return NULL;
+    return 0;
 }
 
 unsigned char DCE_MenuRenderStats()
 {
-    uint8 r = 0;
+    uint8_t r = 0;
 	float s = 1;
 	
 	while(!r)
@@ -238,12 +238,12 @@ unsigned char DCE_MenuRenderGameOver(unsigned char input, float * s, unsigned ch
     		break;
 	}
     
-    return NULL;
+    return 0;
 }
 
 unsigned char DCE_MenuGameOver()
 {
-    uint8 r = 0;
+    uint8_t r = 0;
 	float s = 1;
 	
 	while(!r)
@@ -306,10 +306,10 @@ unsigned char DCE_MenuRenderPauseMenu(unsigned char input, float * s, unsigned c
     		
     		DCE_SfxPlay(WEAPON_EMPTY);
     		
-    		return NULL;
+    		return 0;
 	}
     
-    return NULL;
+    return 0;
 }
 
 void DCE_WaitScreen(unsigned short logoID)

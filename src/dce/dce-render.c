@@ -137,8 +137,8 @@ void DCE_RenderEnableShadowVolumes(unsigned char enable)
 
 /* Custom version of sq_cpy from KOS for copying a buffer the PVR */
 inline void DCE_RenderSubmitPVR(void *src, int n) {
-    uint32 *d = (uint32 *)TA_SQ_ADDR;
-    uint32 *s = src;
+    uint32_t *d = (uint32_t *)TA_SQ_ADDR;
+    uint32_t *s = src;
 
     /* fill/write queues as many times necessary */
     while(n--) {
@@ -156,14 +156,14 @@ inline void DCE_RenderSubmitPVR(void *src, int n) {
     }
 
     /* Wait for both store queues to complete */
-    d = (uint32 *)0xe0000000;
+    d = (uint32_t *)0xe0000000;
     d[0] = d[8] = 0;
 }
 
 /* Custom version of sq_cpy from KOS for copying a pvr header or vertex to the PVR */
-inline void DCE_RenderSubmitHeader(uint32 *src)
+inline void DCE_RenderSubmitHeader(uint32_t *src)
 {
-    uint32 *d = (uint32 *)TA_SQ_ADDR;
+    uint32_t *d = (uint32_t *)TA_SQ_ADDR;
 
     d[0] = *(src++);
     d[1] = *(src++);
@@ -190,8 +190,14 @@ void DCE_InitRender()
 
 
         0, /* No FSAA */
-        
-        0 /* Autosort Disabled */
+
+        0, /* Autosort Disabled */
+
+        0, /* No extra OPBs */
+
+        /* Single vertex buffer: the game needs more VRAM than KOS leaves free
+           with the default double-buffered vertex buffers */
+        1
     };
     
     pvr_init(&params);
@@ -385,10 +391,10 @@ void DCE_RenderTexturedQuad2D(float x1, float y1, float x2, float y2,
 	DCE_PVR_QUAD[0].y = DCE_PVR_QUAD[1].y = y1;
 	DCE_PVR_QUAD[2].y = DCE_PVR_QUAD[3].y = y2;
 
-	DCE_RenderSubmitHeader((uint32 *)&DCE_PVR_QUAD[0]);
-	DCE_RenderSubmitHeader((uint32 *)&DCE_PVR_QUAD[1]);
-	DCE_RenderSubmitHeader((uint32 *)&DCE_PVR_QUAD[2]);
-	DCE_RenderSubmitHeader((uint32 *)&DCE_PVR_QUAD[3]);
+	DCE_RenderSubmitHeader((uint32_t *)&DCE_PVR_QUAD[0]);
+	DCE_RenderSubmitHeader((uint32_t *)&DCE_PVR_QUAD[1]);
+	DCE_RenderSubmitHeader((uint32_t *)&DCE_PVR_QUAD[2]);
+	DCE_RenderSubmitHeader((uint32_t *)&DCE_PVR_QUAD[3]);
 }
 
 void DCE_RenderSubmitTexturedQuad2D(float x, float y, float w, float h,
@@ -412,7 +418,7 @@ void DCE_RenderSubmitTexturedQuad2D(float x, float y, float w, float h,
 	DCE_PVR_QUAD[0].y = DCE_PVR_QUAD[1].y = y - (h * .5);
 	DCE_PVR_QUAD[2].y = DCE_PVR_QUAD[3].y = y + (h * .5);
 
-    sq_cpy(0x10000000, &DCE_PVR_QUAD[0], 32 * 4);
+    sq_cpy((void *)0x10000000, &DCE_PVR_QUAD[0], 32 * 4);
 }
 
 void DCE_RenderCompileAndSubmitHeader(unsigned char list)
@@ -434,7 +440,7 @@ void DCE_RenderCompileAndSubmitHeader(unsigned char list)
         
     pvr_poly_compile(&hdr, &DCE_PVR_POLY_CXT);
 
-    DCE_RenderSubmitHeader((uint32 *)&hdr);
+    DCE_RenderSubmitHeader((uint32_t *)&hdr);
 }
 
 void DCE_RenderCompileAndSubmitTextureHeaderFilter(unsigned short index, unsigned char filter)
@@ -483,7 +489,7 @@ void DCE_RenderCompileAndSubmitTextureHeaderFilter(unsigned short index, unsigne
     
 	pvr_poly_compile(&hdr, &DCE_PVR_POLY_CXT);
 
-    DCE_RenderSubmitHeader((uint32 *)&hdr);
+    DCE_RenderSubmitHeader((uint32_t *)&hdr);
 }
 
 void DCE_RenderCompileAndSubmitTextureHeader(unsigned short index)
@@ -532,7 +538,7 @@ void DCE_RenderCompileAndSubmitTextureHeader(unsigned short index)
     
 	pvr_poly_compile(&hdr, &DCE_PVR_POLY_CXT);
 
-    DCE_RenderSubmitHeader((uint32 *)&hdr);
+    DCE_RenderSubmitHeader((uint32_t *)&hdr);
 }
 
 void DCE_RenderCompileAndSubmitHeaderTextured(unsigned char list, unsigned short index,
@@ -581,7 +587,7 @@ void DCE_RenderCompileAndSubmitHeaderTextured(unsigned char list, unsigned short
     
 	pvr_poly_compile(&hdr, &DCE_PVR_POLY_CXT);
 
-    DCE_RenderSubmitHeader((uint32 *)&hdr);
+    DCE_RenderSubmitHeader((uint32_t *)&hdr);
 }
 
 /* Clamp X to [MIN,MAX]: */
@@ -606,7 +612,7 @@ void DCE_RenderSetScissor(int x, int y, int width, int height) {
     c.ex = CLAMP((maxx / 32) - 1, 0, vid_mode->width / 32);
     c.ey = CLAMP((maxy / 32) - 1, 0, vid_mode->height / 32);
 
-    DCE_RenderSubmitHeader((uint32 *)&c);
+    DCE_RenderSubmitHeader((uint32_t *)&c);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -726,7 +732,7 @@ static inline ubyte DCE_RenderClipTri(float *vert_pos, int vert_stride,
                                               float *uv_coord, int uv_stride,
                                               unsigned int *argb, int argb_stride,
 											  pvr_cmd_clip_vertex_t *dst) {
-    uint16 clip = 0; /* Clip Code for current Triangle */
+    uint16_t clip = 0; /* Clip Code for current Triangle */
 
 	mat_trans_single3_nodivw_nomod(vert_pos[0], vert_pos[1], vert_pos[2], dst[0].x, dst[0].y, dst[0].z, dst[0].w);
     vert_pos += vert_stride;
@@ -853,7 +859,7 @@ void DCE_RenderTransformAndClipTriangles(float *vert_pos, int vert_stride,
 	int ts = uv_stride / 4;
 	int cs = argb_stride / 4;
 
-    pvr_dr_init(dr_state);
+    pvr_dr_init(&dr_state);
 
     for(i = 0; i < count; i += 3)
 		DCE_RenderClipTri(&vert_pos[i * vs], vs, &uv_coord[i * ts], ts,
@@ -871,7 +877,7 @@ void DCE_RenderTransformAndClipTriangleStrip(float *vert_pos, int vert_stride,
 	int ts = uv_stride / 4;
 	int cs = argb_stride / 4;
 
-    pvr_dr_init(dr_state);
+    pvr_dr_init(&dr_state);
 
     for(i = 0; i < count - 2; i++)
 		DCE_RenderClipTri(&vert_pos[i * vs], vs, &uv_coord[i * ts], ts,
@@ -880,7 +886,7 @@ void DCE_RenderTransformAndClipTriangleStrip(float *vert_pos, int vert_stride,
 
 //============================================================================//
 
-void DCE_RenderCheapShadow(uint16 texID, vec3f_t * v, float size)
+void DCE_RenderCheapShadow(uint16_t texID, vec3f_t * v, float size)
 {
 	//DCE_RenderSetBlendSrc(PVR_BLEND_SRCALPHA);
 
@@ -1035,6 +1041,7 @@ void DCE_TesselateDecalQuad(vec3f_t * point, float size, vec3f_t * normal, vec3f
 	vec3f_add(&v[3], point, &v[3]);
 }
 
+#if 0 /* Unused: depends on Q3BSP / GL matrix / HQMD2 cache code that is not part of the build */
 void DCE_RenderCheapFlashLight(DCE_Player * player, unsigned short texID,
                                float x1, float x2, float y1, float y2)
 {
@@ -1079,6 +1086,7 @@ void DCE_RenderCheapFlashLight(DCE_Player * player, unsigned short texID,
                              x + d + MIN_RAD, y + d + MIN_RAD,
                              0, 0, 1, 1, PVR_PACK_COLOR( c * .75, c, c, c ));
 }
+#endif
 
 void DCE_RenderBoundingBox(vec3f_t * min, vec3f_t * max, unsigned short int texID, unsigned int color)
 {
@@ -1191,7 +1199,7 @@ void DCE_RenderTransformTris(float *vert_pos, int vert_stride,
 */   
 //    pvr_dr_state_t dr_state;
     
-//    pvr_dr_init(dr_state);
+//    pvr_dr_init(&dr_state);
     
     pvr_cmd_clip_vertex_t * v = &DCE_PVR_CLIP_VERTEX[0];//pvr_dr_target(dr_state);
     
@@ -1209,7 +1217,7 @@ void DCE_RenderTransformTris(float *vert_pos, int vert_stride,
         v->argb = 0xFFFFFFFF;
                   
         //pvr_dr_commit(v);  
-        DCE_RenderSubmitHeader((uint32 *)v);
+        DCE_RenderSubmitHeader((uint32_t *)v);
         
         //v = pvr_dr_target(dr_state);
                
@@ -1223,7 +1231,7 @@ void DCE_RenderTransformTris(float *vert_pos, int vert_stride,
         //v->argb = 0xFFFFFFFF;
                   
         //pvr_dr_commit(v);      
-        DCE_RenderSubmitHeader((uint32 *)v);
+        DCE_RenderSubmitHeader((uint32_t *)v);
         
         //v = pvr_dr_target(dr_state);
                
@@ -1237,7 +1245,7 @@ void DCE_RenderTransformTris(float *vert_pos, int vert_stride,
         //v->argb = 0xFFFFFFFF;
                   
         //pvr_dr_commit(v);
-        DCE_RenderSubmitHeader((uint32 *)v);                 
+        DCE_RenderSubmitHeader((uint32_t *)v);                 
     }
 }
 
@@ -1294,6 +1302,7 @@ void DCE_TesselateCheapShadow(float r)
      }  
 }
 
+#if 0 /* Unused: depends on Q3BSP / GL matrix / HQMD2 cache code that is not part of the build */
 void DCE_RenderCheapShadowCull(DCE_Player * player, vec3f_t * p, float h, float s)
 {
     glPushMatrix();
@@ -1315,6 +1324,7 @@ void DCE_RenderCheapShadowCull(DCE_Player * player, vec3f_t * p, float h, float 
     
     DCE_MatrixApplyRender();
 }
+#endif
 
 /** \brief  Calculate the offset color value for a set of bumpmap parameters.
 
@@ -1353,15 +1363,15 @@ unsigned int DCE_RenderComputeBumpParam(vec3f_t * p)
 		
 		fsincos(F_PI / 2, &s, &c);
 		
-		uint8 hp = 255;
-        uint8 k1 = ~hp;
-        uint8 k2 = (uint8)(hp * s);
-        uint8 k3 = (uint8)(hp * c);
+		uint8_t hp = 255;
+        uint8_t k1 = ~hp;
+        uint8_t k2 = (uint8_t)(hp * s);
+        uint8_t k3 = (uint8_t)(hp * c);
         
         DCE_PVR_BUMP_PARAM = (k1 << 24) | (k2 << 16) | (k3 << 8) | 0;
 	}
 
-    uint8 qp = (uint8)(vec3f_vectors_to_angle_xz(&DCE_PVR_BUMP_LIGHT_SOURCE, p) * DCE_PVR_BUMP_QSCALE);
+    uint8_t qp = (uint8_t)(vec3f_vectors_to_angle_xz(&DCE_PVR_BUMP_LIGHT_SOURCE, p) * DCE_PVR_BUMP_QSCALE);
 
     DCE_PVR_BUMP_PARAM |= qp;
 
@@ -1412,7 +1422,7 @@ void DCE_RenderCompileAndSubmitHeaderBumpMapped(unsigned short index)
     
 	pvr_poly_compile(&hdr, &DCE_PVR_POLY_CXT);
 
-    DCE_RenderSubmitHeader((uint32 *)&hdr);
+    DCE_RenderSubmitHeader((uint32_t *)&hdr);
 }
 
 void DCE_RenderIndexedBuffer(vec3f_t * buf, unsigned int *index, unsigned int count)
@@ -1577,7 +1587,7 @@ void DCE_RenderModel(vec3f_t *p, float scale, vec3f_t * mtrans, vec3f_t * mscale
     
     DCE_RenderSetCullFunc(DCE_PVR_CULL_CW);   
     
- 	DCE_RenderCompileAndSubmitHeaderTextured(PVR_LIST_OP_POLY, texID, NULL);
+ 	DCE_RenderCompileAndSubmitHeaderTextured(PVR_LIST_OP_POLY, texID, 0);
     
     DCE_RenderTransformAndCullTriangles(&vert->x, sizeof(pvr_vertex_t),
                                  &vert->u, sizeof(pvr_vertex_t),
@@ -1666,7 +1676,7 @@ void DCE_RenderPlayerModelTPP(DCE_Player * player)
 
 	mat_scale(pframe->scale[0], pframe->scale[1], pframe->scale[2]);
 
-    DCE_RenderCompileAndSubmitHeaderTextured(PVR_LIST_OP_POLY, mdl->body_texID, NULL);
+    DCE_RenderCompileAndSubmitHeaderTextured(PVR_LIST_OP_POLY, mdl->body_texID, 0);
 
     DCE_RenderCacheIndexHQMD2(mdl->body, frame);
 
@@ -2155,7 +2165,7 @@ void DCE_RenderModelASM(vec3f_t *p, float scale, vec3f_t * mtrans, vec3f_t * msc
     
     DCE_RenderSetCullFunc(DCE_PVR_CULL_CW);   
     
- 	DCE_RenderCompileAndSubmitHeaderTextured(PVR_LIST_OP_POLY, texID, NULL);
+ 	DCE_RenderCompileAndSubmitHeaderTextured(PVR_LIST_OP_POLY, texID, 0);
     
     DCE_RenderCullTris(&vert->x, &vert->u, tris, sizeof(pvr_vertex_t));	
     
@@ -2163,6 +2173,7 @@ void DCE_RenderModelASM(vec3f_t *p, float scale, vec3f_t * mtrans, vec3f_t * msc
 }
 
 
+#if 0 /* Unused: depends on Q3BSP / GL matrix / HQMD2 cache code that is not part of the build */
 void DCE_RenderPlayerHQMD2(DCE_PlayerModel * mdl, vec3f_t * pos, float r, unsigned char frame)
 {
         struct md2_frame_t *pframe = &mdl->body->frames[frame];
@@ -2172,8 +2183,10 @@ void DCE_RenderPlayerHQMD2(DCE_PlayerModel * mdl, vec3f_t * pos, float r, unsign
         DCE_RenderModelASM(pos, 1.0f, (vec3f_t *)pframe->translate, (vec3f_t *)pframe->scale,
 	                              mdl->body_texID, mdl->body->header.num_tris, r, DCE_CLIP_BUFFER);
 }
+#endif
 
 
+#if 0 /* Unused: depends on Q3BSP / GL matrix / HQMD2 cache code that is not part of the build */
 void DCE_RenderPlayerWeaponHQMD2(DCE_PlayerModel * mdl, vec3f_t * pos, float r, unsigned char frame)
 {
         struct md2_frame_t *pframe = &mdl->body->frames[frame];
@@ -2183,5 +2196,6 @@ void DCE_RenderPlayerWeaponHQMD2(DCE_PlayerModel * mdl, vec3f_t * pos, float r, 
         DCE_RenderModelASM(pos, 1.0f, (vec3f_t *)pframe->translate, (vec3f_t *)pframe->scale,
 	                              mdl->weapon_texID, mdl->weapon->header.num_tris, r, DCE_CLIP_BUFFER);
 }
+#endif
 
 

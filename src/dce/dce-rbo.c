@@ -381,7 +381,7 @@ void DCE_LoadRBOCluster(char * fname)
 	if(f == NULL)
 	{
 		printf("File Error %s\n", fname);
-		return 0;
+		return;
 	}
 
 	fgets(buf, 96, f);                                // Read First Line
@@ -417,7 +417,7 @@ void DCE_LoadRBOCluster(char * fname)
 	    
         robj->instance = NULL;
 	    	    	    
-	    uint16 len = DCE_StringFindCharFirst(buf, '.');
+	    uint16_t len = DCE_StringFindCharFirst(buf, '.');
 	
         sscanf(buf + 4, "%s %i", id, &shadow);
 	    
@@ -647,7 +647,7 @@ void DCE_LoadARBO(char * fname, unsigned char active, char * segment, unsigned c
 		memset(buf, 0, 64); // Clear the buffer for next line
     }
     
-    DCE_LoadCBOInstance(fname, robj->active, segment, robj->instance, robj->instances);
+    DCE_LoadCBOInstance(fname, robj->active[0], segment, robj->instance, robj->instances);
     
 	++RBO_OBJECTS;
 	
@@ -697,7 +697,7 @@ void DCE_LoadARBOCluster(char * fname)
 		if(buf[0] == '}')    // Check for end of segment
             break;
 
-	    uint16 len = DCE_StringFindCharFirst(buf, '.');
+	    uint16_t len = DCE_StringFindCharFirst(buf, '.');
 	
         sscanf(buf + 4, "%s %i", id, &shadow);
 	    
@@ -717,7 +717,7 @@ void DCE_LoadLevelBatch(char * fname)
 	
 	DCE_StringCopyNewExt(dir, fname, ".f");
 	
-	uint16 pos = DCE_StringFindCharFirst(dir, '/');
+	uint16_t pos = DCE_StringFindCharFirst(dir, '/');
 	
 	dir[pos] = '\0';
 	

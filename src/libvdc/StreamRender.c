@@ -1,5 +1,6 @@
 #include <kos.h>
 #include <dc/pvr.h>
+#include <dc/sq.h>
 
 #include "GetTime.h"
 
@@ -26,11 +27,10 @@ void StreamTexturePVR( StreamBuffer * sbuf )
     unsigned int *s = (unsigned int *)StreamBuffer_Pop(sbuf);
     unsigned int *d = (unsigned int *)(void *)
 		(0xe0000000 | (((unsigned long)sbuf->vramData) & 0x03ffffe0));
-    uint32 count = sbuf->imgWidth * 2; 
+    uint32_t count = sbuf->imgWidth * 2; 
    
-    /* Set store queue memory area as desired */
-    QACR0 = ((((unsigned int)sbuf->vramData)>>26)<<2)&0x1c;
-    QACR1 = ((((unsigned int)sbuf->vramData)>>26)<<2)&0x1c;
+    /* Lock the store queues and point them at the texture in VRAM */
+    sq_lock(sbuf->vramData);
 
     for( i = 0; i < sbuf->imgHeight; i++ )
     {                        
@@ -54,8 +54,8 @@ void StreamTexturePVR( StreamBuffer * sbuf )
 	  }
 	}
 	/* Wait for both store queues to complete */
-	d = (unsigned int *)0xe0000000;
-	d[0] = d[8] = 0;    
+	sq_wait();
+	sq_unlock();
 }
 
 void StreamRender_DisplayFrame( StreamBuffer * sbuf )

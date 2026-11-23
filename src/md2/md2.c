@@ -421,7 +421,7 @@ void DCE_RenderHQMD2(md2_mdl * mdl, unsigned char frame)
     pvr_dr_state_t dr_state;
     pvr_vertex_t * vert;
     
-    pvr_dr_init(dr_state);
+    pvr_dr_init(&dr_state);
 
     for(i = 0; i < mdl->header.num_tris; i++)
     {
@@ -516,7 +516,7 @@ void DCE_RenderCacheIndexHQMD2(md2_mdl * mdl, unsigned char frame)
     pvr_dr_state_t dr_state;
     pvr_vertex_t * vert;
     
-    pvr_dr_init(dr_state);
+    pvr_dr_init(&dr_state);
 	    
     for(i = 0; i < mdl->header.num_tris; i++)
     {
@@ -606,7 +606,7 @@ void DCE_RenderCacheIndexHQMD2_V2(md2_mdl * mdl, unsigned char frame)
     pvr_dr_state_t dr_state;
     pvr_vertex_t * vert;
     
-    pvr_dr_init(dr_state);
+    pvr_dr_init(&dr_state);
 
     for(i = 0; i < mdl->header.num_tris; i++)
     {
@@ -682,7 +682,7 @@ void DCE_RenderCacheIndexLerpHQMD2(md2_mdl * mdl, unsigned char frame, unsigned 
     pvr_dr_state_t dr_state;
     pvr_vertex_t * vert;
     
-    pvr_dr_init(dr_state);
+    pvr_dr_init(&dr_state);
 
     for(i = 0; i < mdl->header.num_vertices; i++)
     {

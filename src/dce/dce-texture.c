@@ -124,8 +124,8 @@ unsigned short int DCE_TextureLoadJPG(char *fname)
 {
 	FILE *infile = NULL;
 	int		i;
-	uint16		* ourbuffer;
-	uint16		* temp_tex;
+	uint16_t		* ourbuffer;
+	uint16_t		* temp_tex;
     int scale = 1;
 
 	infile = fopen(fname, "rb");
@@ -146,8 +146,8 @@ unsigned short int DCE_TextureLoadJPG(char *fname)
 	(void)jpeg_read_header(&cinfo, TRUE);
 	jpeg_calc_output_dimensions(&cinfo);
 
-	temp_tex = (uint16 *)malloc(cinfo.image_width * cinfo.image_height* 2);	
-	ourbuffer = (uint16 *)malloc(cinfo.image_width * 2);
+	temp_tex = (uint16_t *)malloc(cinfo.image_width * cinfo.image_height* 2);	
+	ourbuffer = (uint16_t *)malloc(cinfo.image_width * 2);
 
 	cinfo.scale_denom = scale;
 	(void)jpeg_start_decompress(&cinfo);
@@ -206,7 +206,7 @@ unsigned short int DCE_TextureLoadJPG(char *fname)
     return index;
 }
 
-void convert_to_555(uint16 *src, uint16 *dst, int count, uint16 key)
+void convert_to_555(uint16_t *src, uint16_t *dst, int count, uint16_t key)
 {
     int i;
     for(i = 0; i < count; i++)
@@ -223,8 +223,8 @@ unsigned short int DCE_TextureLoadJPG1555(char *fname)
 {
 	FILE *infile = NULL;
 	int		i;
-	uint16		* ourbuffer;
-	uint16		* temp_tex;
+	uint16_t		* ourbuffer;
+	uint16_t		* temp_tex;
     int scale = 1;
 
 	infile = fopen(fname, "rb");
@@ -245,8 +245,8 @@ unsigned short int DCE_TextureLoadJPG1555(char *fname)
 	(void)jpeg_read_header(&cinfo, TRUE);
 	jpeg_calc_output_dimensions(&cinfo);
 
-	temp_tex = (uint16 *)malloc(cinfo.image_width * cinfo.image_height* 2);	
-	ourbuffer = (uint16 *)malloc(cinfo.image_width * 2);
+	temp_tex = (uint16_t *)malloc(cinfo.image_width * cinfo.image_height* 2);	
+	ourbuffer = (uint16_t *)malloc(cinfo.image_width * 2);
 
 	cinfo.scale_denom = scale;
 	(void)jpeg_start_decompress(&cinfo);
@@ -443,18 +443,18 @@ static unsigned char RGB565_BLUE(unsigned short c) {
     return c & RGB565_BLUE_MASK;
 }
 
-uint16 DCE_AverageQuadPixelRGB565(uint16 p1, uint16 p2, uint16 p3, uint16 p4) {
-    uint8 R = (RGB565_RED(p1) + RGB565_RED(p2) + RGB565_RED(p3) + RGB565_RED(p4)) / 4;
-    uint8 G = (RGB565_GREEN(p1) + RGB565_GREEN(p2) + RGB565_GREEN(p3) + RGB565_GREEN(p4)) / 4;
-    uint8 B = (RGB565_BLUE(p1) + RGB565_BLUE(p2) + RGB565_BLUE(p3) + RGB565_BLUE(p4)) / 4;
+uint16_t DCE_AverageQuadPixelRGB565(uint16_t p1, uint16_t p2, uint16_t p3, uint16_t p4) {
+    uint8_t R = (RGB565_RED(p1) + RGB565_RED(p2) + RGB565_RED(p3) + RGB565_RED(p4)) / 4;
+    uint8_t G = (RGB565_GREEN(p1) + RGB565_GREEN(p2) + RGB565_GREEN(p3) + RGB565_GREEN(p4)) / 4;
+    uint8_t B = (RGB565_BLUE(p1) + RGB565_BLUE(p2) + RGB565_BLUE(p3) + RGB565_BLUE(p4)) / 4;
 
     return R << RGB565_RED_SHIFT | G << RGB565_GREEN_SHIFT | B;
 }
 
-void DCE_TextureDownsampleHalfSize(uint16 *src, uint16 *dst, uint16 width, uint16 height)
+void DCE_TextureDownsampleHalfSize(uint16_t *src, uint16_t *dst, uint16_t width, uint16_t height)
 {
-    uint32 i = 0;
-    uint16 x, y;
+    uint32_t i = 0;
+    uint16_t x, y;
 
     for(y = 0; y < height; y += 2)
     {
@@ -588,12 +588,12 @@ unsigned int DCE_TextureSample2D565(unsigned short int * buf, unsigned short int
 	return (0xFF000000 | (r << 16) | (g << 8) | b);
 }
 
-uint16 * DCE_TextureLoadJPGBuf(char *fname, unsigned short int * w, unsigned short int * h)
+uint16_t * DCE_TextureLoadJPGBuf(char *fname, unsigned short int * w, unsigned short int * h)
 {
 	FILE *infile = NULL;
 	int		i;
-	uint16		* ourbuffer;
-	uint16		* temp_tex;
+	uint16_t		* ourbuffer;
+	uint16_t		* temp_tex;
     int scale = 1;
 
 	infile = fopen(fname, "rb");
@@ -614,8 +614,8 @@ uint16 * DCE_TextureLoadJPGBuf(char *fname, unsigned short int * w, unsigned sho
 	(void)jpeg_read_header(&cinfo, TRUE);
 	jpeg_calc_output_dimensions(&cinfo);
 
-	temp_tex = (uint16 *)malloc(cinfo.image_width * cinfo.image_height* 2);	
-	ourbuffer = (uint16 *)malloc(cinfo.image_width * 2);
+	temp_tex = (uint16_t *)malloc(cinfo.image_width * cinfo.image_height* 2);	
+	ourbuffer = (uint16_t *)malloc(cinfo.image_width * 2);
 
 	cinfo.scale_denom = scale;
 	(void)jpeg_start_decompress(&cinfo);
@@ -689,9 +689,9 @@ unsigned short int DCE_TextureLoadPVRBump(char *fname)
 #define RGB8_MAX             0xFF
 
 
-uint16 DCE_TextureLoadTGA1555(char * fname)
+uint16_t DCE_TextureLoadTGA1555(char * fname)
 {
-    uint16 w,h;
+    uint16_t w,h;
     unsigned char * hdr = (unsigned char*)malloc(TGA_HDR_SIZE);
 	
 	FILE * f = fopen(fname, "rb");
@@ -713,11 +713,11 @@ uint16 DCE_TextureLoadTGA1555(char * fname)
 	if(hdr[TGA_HDR_BPP] != 16)
 		return 0;
 
-	uint16 * tex = (uint16 * )malloc(w * h * sizeof(uint16));
+	uint16_t * tex = (uint16_t * )malloc(w * h * sizeof(uint16_t));
 
 	fseek(f, TGA_HDR_SIZE, SEEK_SET);
 
-	fread(tex, sizeof(uint16), w * h, f);
+	fread(tex, sizeof(uint16_t), w * h, f);
 
 	fclose(f);
 
@@ -768,7 +768,7 @@ void DCE_LoadTextureBatch(char * dir)
 	   	 
     while((e = readdir (d)))
 	{
-	    uint16 pos = DCE_StringFindCharFirst(e->d_name, '.');
+	    uint16_t pos = DCE_StringFindCharFirst(e->d_name, '.');
 	    
 	    switch(e->d_name[pos + 1])
 	    {
@@ -785,7 +785,7 @@ void DCE_LoadTextureBatch(char * dir)
 				break;
 		}	    
 	    
-		strcpy(DCE_TEXTURE_CACHE[DCE_TEXTURES].name, e->d_name, strlen(e->d_name));
+		strncpy(DCE_TEXTURE_CACHE[DCE_TEXTURES].name, e->d_name, strlen(e->d_name));
 
 	    printf("TEXTURE CACHE: %s\n", e->d_name); 
 		

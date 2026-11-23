@@ -44,7 +44,7 @@
 #define DCE_PERSPECTIVE_THIRD  0x1
 #define DCE_PERSPECTIVE_STATIC 0x2
 
-enum
+typedef enum
 {
 	IDLE = 0,
 	EQUIP,
@@ -70,7 +70,7 @@ enum
 	WALK_FIRE
 } DCE_PlayerFrame;
 
-enum
+typedef enum
 {
 	HANDS_IDLE = 0,
 	HANDS_EQUIP,
@@ -93,26 +93,26 @@ typedef struct
 	md2_mdl * body;                 // Third Person Player Model
 	md2_mdl * body_lod1;            // Level Of Deatail 1
 	md2_mdl * body_lod2;            // Level Of Detail 2
-	uint16    body_texID;
-	uint16    head_texID;
-	uint16    legs_texID;
+	uint16_t    body_texID;
+	uint16_t    head_texID;
+	uint16_t    legs_texID;
 	
 	md2_mdl * weapon;               // Third Person Player Weapon Model
 	md2_mdl * weapon_lod1;
 	md2_mdl * weapon_lod2;
-	uint16    weapon_texID;
+	uint16_t    weapon_texID;
 
 	md2_mdl * weapon_attachment;
-	uint16    weapon_attachment_texID;          // Weapon Attachment Model
+	uint16_t    weapon_attachment_texID;          // Weapon Attachment Model
 		
 	md2_mdl * hands;                // First Person Player Hands Model
-	uint16    hands_texID;
+	uint16_t    hands_texID;
 	
 	md2_mdl * blood;
-	uint16    blood_texID;          // Blood Model
+	uint16_t    blood_texID;          // Blood Model
 
 	md2_mdl * muzzleflash;         // MuzzleFlash
-	uint16    muzzleflash_texID;
+	uint16_t    muzzleflash_texID;
 		
 	ubyte body_fps;
 	ubyte hands_fps;

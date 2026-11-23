@@ -6,6 +6,11 @@
 TARGET = dce.elf
 
 #Compiler Optimization Flags
+# GCC 14+ turns these into errors; the engine predates that and relies on the old behaviour
+KOS_CFLAGS += -Wno-error=incompatible-pointer-types
+# The engine uses GNU89 "inline" semantics (inline in header, definition in .c)
+KOS_CFLAGS += -fgnu89-inline
+
 KOS_CFLAGS += -ffast-math -O3 -fomit-frame-pointer -falign-loops=4 -falign-labels=4 -falign-functions=32 -falign-jumps=4 -Iinclude
 
 #Engine Include Directory
@@ -51,20 +56,37 @@ OBJS += font/font.o
 KOS_CFLAGS += -I. -Imd2/
 OBJS += md2/md2.o
 
+#Bundled decoder libraries (built with the current toolchain)
+LIBMPEG2_DIR = libvdc/libmpeg2/libmpeg2
+LIBMPG123_DIR = libvdc/libmpg123/libmpg123
+LIBMPEG2 = $(LIBMPEG2_DIR)/libmpeg2.a
+LIBMPG123 = $(LIBMPG123_DIR)/libmpg123_1.13.1.a
+
 #Compile TARGET Elf
 all: rm-elf $(TARGET)
+
+.PHONY: all clean rm-elf run dist libs
+
+libs:
+	$(MAKE) -C $(LIBMPEG2_DIR)
+	$(MAKE) -C $(LIBMPG123_DIR)
+
+$(LIBMPEG2) $(LIBMPG123): libs
 
 include $(KOS_BASE)/Makefile.rules
 
 clean:
 	-rm -f $(TARGET) $(OBJS)
+	$(MAKE) -C $(LIBMPEG2_DIR) clean
+	$(MAKE) -C $(LIBMPG123_DIR) clean
 
 rm-elf:
 	-rm -f $(TARGET)
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS) $(LIBMPEG2) $(LIBMPG123)
 	$(KOS_CC) $(KOS_CFLAGS) $(LDFLAGS) $(KOS_LDFLAGS) -o $(TARGET) $(KOS_START) \
-		$(OBJS) $(OBJEXTRA) -L$(KOS_BASE)/lib -ljpeg -lmpeg2 -lmpg123_1.13.1 -lm $(KOS_LIBS)
+		$(OBJS) $(OBJEXTRA) -L$(LIBMPEG2_DIR) -L$(LIBMPG123_DIR) \
+		-ljpeg -lmpeg2 -lmpg123_1.13.1 -lm $(KOS_LIBS)
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)

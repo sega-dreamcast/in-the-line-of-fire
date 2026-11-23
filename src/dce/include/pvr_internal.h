@@ -122,23 +122,23 @@
 
 // TA buffers structure: we have two sets of these
 typedef struct {
-    uint32  vertex, vertex_size;            /* Vertex buffer */
-    uint32  opb, opb_size;                  /* Object pointer buffers, size */
-    uint32  opb_type[PVR_OPB_COUNT];        /* Object pointer buffers (of each type) */
-    uint32  tile_matrix, tile_matrix_size;  /* Tile matrix, size */
+    uint32_t  vertex, vertex_size;            /* Vertex buffer */
+    uint32_t  opb, opb_size;                  /* Object pointer buffers, size */
+    uint32_t  opb_type[PVR_OPB_COUNT];        /* Object pointer buffers (of each type) */
+    uint32_t  tile_matrix, tile_matrix_size;  /* Tile matrix, size */
 } pvr_ta_buffers_t;
 
 // DMA buffers structure: we have two sets of these
 typedef struct {
-    uint8   * base[PVR_OPB_COUNT];  // DMA buffers, if assigned
-    uint32  ptr[PVR_OPB_COUNT];     // DMA buffer write pointer, if used
-    uint32  size[PVR_OPB_COUNT];    // DMA buffer sizes, or zero if none
+    uint8_t   * base[PVR_OPB_COUNT];  // DMA buffers, if assigned
+    uint32_t  ptr[PVR_OPB_COUNT];     // DMA buffer write pointer, if used
+    uint32_t  size[PVR_OPB_COUNT];    // DMA buffer sizes, or zero if none
     int ready;                      // >0 if these buffers are ready to be DMAed
 } pvr_dma_buffers_t;
 
 // Frame buffers structure: we have two sets of these
 typedef struct {
-    uint32  frame, frame_size;      // Output frame buffer, size
+    uint32_t  frame, frame_size;      // Output frame buffer, size
 } pvr_frame_buffers_t;
 
 /* PVR status structure; not only will this hold status information,
@@ -149,11 +149,11 @@ typedef struct {
     int     valid;
 
     // General configuration
-    uint32  lists_enabled;              // opb_completed's value when we're ready to render
-    uint32  list_reg_mask;              // Active lists register mask
+    uint32_t  lists_enabled;              // opb_completed's value when we're ready to render
+    uint32_t  list_reg_mask;              // Active lists register mask
     int     dma_mode;                   // 1 if we are using DMA to transfer vertices
     int     opb_size[PVR_OPB_COUNT];    // opb size flags
-    uint32  opb_ind[PVR_OPB_COUNT];     // Individual opb sizes (in bytes)
+    uint32_t  opb_ind[PVR_OPB_COUNT];     // Individual opb sizes (in bytes)
 
     // Pipeline state
     int     ram_target;                 // RAM buffer we're writing into
@@ -164,9 +164,9 @@ typedef struct {
                                         // (^1 == frame buffer we're rendering to)
 
     int     list_reg_open;              // Which list is open for registration, if any? (non-DMA only)
-    uint32  lists_closed;               // (1 << idx) for each list which the SH4 has lost interest in
-    uint32  lists_transferred;          // (1 << idx) for each list which has completely transferred to the TA
-    uint32  lists_dmaed;                // (1 << idx) for each list which has been DMA'd (DMA mode only)
+    uint32_t  lists_closed;               // (1 << idx) for each list which the SH4 has lost interest in
+    uint32_t  lists_transferred;          // (1 << idx) for each list which has completely transferred to the TA
+    uint32_t  lists_dmaed;                // (1 << idx) for each list which has been DMA'd (DMA mode only)
 
     mutex_t dma_lock;                   // Locked if a DMA is in progress (vertex or texture)
     int     ta_busy;                    // >0 if a DMA is in progress and the TA hasn't signaled completion
@@ -177,32 +177,32 @@ typedef struct {
     pvr_dma_buffers_t   dma_buffers[2];     // DMA buffers (if any)
     pvr_ta_buffers_t    ta_buffers[2];      // TA buffers
     pvr_frame_buffers_t frame_buffers[2];   // Frame buffers
-    uint32              texture_base;       // Start of texture RAM
+    uint32_t              texture_base;       // Start of texture RAM
 
     // Screen size / clipping constants
     int     w, h;                       // Screen width, height
     int     tw, th;                     // Screen tile width, height
-    uint32  tsize_const;                // Screen tile size constant
+    uint32_t  tsize_const;                // Screen tile size constant
     float   zclip;                      // Z clip plane
-    uint32  pclip_left, pclip_right;    // X pixel clip constants
-    uint32  pclip_top, pclip_bottom;    // Y pixel clip constants
-    uint32  pclip_x, pclip_y;           // Composited clip constants
-    uint32  bg_color;                   // Background color in ARGB format
+    uint32_t  pclip_left, pclip_right;    // X pixel clip constants
+    uint32_t  pclip_top, pclip_bottom;    // Y pixel clip constants
+    uint32_t  pclip_x, pclip_y;           // Composited clip constants
+    uint32_t  bg_color;                   // Background color in ARGB format
 
     /* Running statistics on the PVR system. All vars are in terms
        of milliseconds. */
-    uint32  vbl_count;                  // VBlank counter for animations and such
-    uint32  frame_count;                // Total number of viewed frames
-    uint64  frame_last_time;            // When did the last frame completion occur?
-    uint64  buf_start_time;             // When did the last DMA buffer fill begin?
-    uint64  reg_start_time;             // When did the last registration begin?
-    uint64  rnd_start_time;             // When did the last render begin?
+    uint32_t  vbl_count;                  // VBlank counter for animations and such
+    uint32_t  frame_count;                // Total number of viewed frames
+    uint64_t  frame_last_time;            // When did the last frame completion occur?
+    uint64_t  buf_start_time;             // When did the last DMA buffer fill begin?
+    uint64_t  reg_start_time;             // When did the last registration begin?
+    uint64_t  rnd_start_time;             // When did the last render begin?
     int     frame_last_len;             // VBlank-to-VBlank length for the last frame (1.0/FrameRate)
     int     buf_last_len;               // Cumulative buffer fill time for the last frame
     int     reg_last_len;               // Registration time for the last frame
     int     rnd_last_len;               // Render time for the last frame
-    uint32  vtx_buf_used;               // Vertex buffer used size for the last frame
-    uint32  vtx_buf_used_max;           // Maximum used vertex buffer size
+    uint32_t  vtx_buf_used;               // Vertex buffer used size for the last frame
+    uint32_t  vtx_buf_used_max;           // Maximum used vertex buffer size
 
     /* Wait-ready semaphore: this will be signaled whenever the pvr_wait_ready()
        call should be ready to return. */
@@ -221,7 +221,7 @@ typedef struct {
     int     to_txr_rp;
 
     // Output address for to-texture mode
-    uint32  to_txr_addr;
+    uint32_t  to_txr_addr;
 } pvr_state_t;
 
 /* There will be exactly one of these in KOS (in pvr_globals.c) */
@@ -229,14 +229,14 @@ extern volatile pvr_state_t pvr_state;
 
 /* Background plane structure */
 typedef struct pvr_bkg_poly {
-    uint32      flags1, flags2;
-    uint32      dummy;
+    uint32_t      flags1, flags2;
+    uint32_t      dummy;
     float       x1, y1, z1;
-    uint32      argb1;
+    uint32_t      argb1;
     float       x2, y2, z2;
-    uint32      argb2;
+    uint32_t      argb2;
     float       x3, y3, z3;
-    uint32      argb3;
+    uint32_t      argb3;
 } pvr_bkg_poly_t;
 
 // Debug macro, for debugging IRQ wackiness
@@ -293,7 +293,7 @@ void pvr_blank_polyhdr_buf(int type, pvr_poly_hdr_t * buf);
 /**** pvr_irq.c *******************************************************/
 
 /* Interrupt handler for PVR events */
-void pvr_int_handler(uint32 code);
+void pvr_int_handler(uint32_t code);
 
 
 #endif

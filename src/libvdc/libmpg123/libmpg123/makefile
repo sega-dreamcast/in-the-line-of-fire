@@ -53,14 +53,15 @@ OBJS += \
 	dither.o \
 	feature.o \
 	ntom.o \
-	synth_8bit.o \
+	synth.o \
 	synth_8bit.o \
 	stringbuf.o \
 	l12_integer_tables.h \
 	l3_integer_tables.h \
 
 INCS += -I. -DLITTLE_ENDIAN=1
-CFLAGS += -m4-single-only -ffast-math
+# Note: do not force an FPU ABI here (e.g. -m4-single-only); use the one KOS was built with
+CFLAGS += -ffast-math
 
 all: libmpg123_1.13.1.a
 
@@ -68,3 +69,6 @@ libmpg123_1.13.1.a: $(OBJS)
 	$(KOS_AR) rcs libmpg123_1.13.1.a $(OBJS)
 
 include $(KOS_BASE)/Makefile.rules
+
+clean:
+	-rm -f libmpg123_1.13.1.a $(filter %.o,$(OBJS))

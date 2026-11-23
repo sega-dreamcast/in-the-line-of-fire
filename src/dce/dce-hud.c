@@ -104,9 +104,9 @@ void DCE_HudLoad(char * fname)
 {
     DCE_HUD_WEAPONS_TEXID = DCE_TextureLoadPVR("/cd/textures/gui/guns_icons_texture.pvr");
     
-    uint16 face_icon = DCE_TextureLoadPVR("/cd/textures/gui/face_icon.pvr");
+    uint16_t face_icon = DCE_TextureLoadPVR("/cd/textures/gui/face_icon.pvr");
 
-    uint16 face_icon2 = DCE_TextureLoadPVR("/cd/textures/gui/clown_icon.pvr");
+    uint16_t face_icon2 = DCE_TextureLoadPVR("/cd/textures/gui/clown_icon.pvr");
 
 	DCE_HudLoadIcon(&DCE_PLAYER_HUD[0].swat_icon, 16, 480 - 128, 96, 112, 0, 0, 1, 1,
 	                face_icon, 0xFFFFFFFF, 1);

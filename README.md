@@ -10,6 +10,12 @@ This project was originally intended to develop an entire game engine, and In Th
 
 Compilation Notes:
 
+Building with a modern KallistiOS (2.2+, GCC 14/15):
+
+From a KOS environment (e.g. the DreamSDK shell), run `make` in the `src` directory. This builds the bundled LibMPEG2 and LibMPG123 with the current toolchain and links them from their source folders, so nothing needs to be copied into the KOS library directory. libjpeg is taken from kos-ports.
+
+The KOS source changes for VRAM mentioned above are no longer needed: the engine asks KOS for a single (not double-buffered) vertex buffer through `pvr_init_params_t.vbuf_doublebuf_disabled`.
+
 This demo is using more VRAM than is available by default using KallistiOS.  You will need to make two very minor changes per my thread here https://dcemulation.org/phpBB/viewtopic.php?t=104102 and then re-compile KOS.
 
 This game includes FMV using a custom video decoder routing written by myself using LibMPEG for video http://libmpeg2.sourceforge.net/

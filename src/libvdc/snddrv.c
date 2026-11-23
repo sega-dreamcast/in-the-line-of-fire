@@ -13,6 +13,8 @@
 
 #include "snddrv.h"
 
+volatile int snddrv_status;
+
 /* This is probably the final version of the driver, based on a handle */
 
 /* Set the Sound Driver volume */

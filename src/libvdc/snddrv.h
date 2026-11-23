@@ -12,7 +12,7 @@
 #include <dc/sound/stream.h>
 
 /* Keep track of things from the Driver side */
-volatile int snddrv_status;
+extern volatile int snddrv_status;
 #define SNDDRV_STATUS_NULL         0x00
 #define SNDDRV_STATUS_INITIALIZING 0x01
 #define SNDDRV_STATUS_READY        0x02

@@ -280,7 +280,7 @@ void DCE_LoadDoorCluster(char * fname)
 		if(buf[0] == '}')
             break;  
 		
-		uint16 len = DCE_StringFindCharFirst(buf, '.');
+		uint16_t len = DCE_StringFindCharFirst(buf, '.');
 	
 	    buf[len + 4] = '\0'; // Clear trailing newline character read in
 		

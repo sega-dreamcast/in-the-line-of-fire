@@ -44,24 +44,24 @@
 typedef unsigned char ubyte;
 
 typedef struct {
-    uint32  flags;              /**< \brief TA command (vertex flags) */
+    uint32_t  flags;              /**< \brief TA command (vertex flags) */
     float   x;                  /**< \brief X coordinate */
     float   y;                  /**< \brief Y coordinate */
     float   z;                  /**< \brief Z coordinate */
     float   v;                  /**< \brief Texture V coordinate */
     float   u;                  /**< \brief Texture U coordinate */
-    uint32  argb;               /**< \brief Vertex color */
-    uint32  oargb;               /**< \brief Vertex offset color */
+    uint32_t  argb;               /**< \brief Vertex color */
+    uint32_t  oargb;               /**< \brief Vertex offset color */
 } pvr_cmd_cull_vertex_t;
 
 typedef struct {
-    uint32  flags;              /**< \brief TA command (vertex flags) */
+    uint32_t  flags;              /**< \brief TA command (vertex flags) */
     float   x;                  /**< \brief X coordinate */
     float   y;                  /**< \brief Y coordinate */
     float   z;                  /**< \brief Z coordinate */
     float   u;                  /**< \brief Texture U coordinate */
     float   v;                  /**< \brief Texture V coordinate */
-    uint32  argb;               /**< \brief Vertex color */
+    uint32_t  argb;               /**< \brief Vertex color */
     float   w;                  /**< \brief Vertex W coordinate */
 } pvr_cmd_clip_vertex_t;
 
@@ -172,7 +172,7 @@ void DCE_RenderTesselateDecal(vec3f_t * point, float size, vec3f_t * normal, uns
 
 void DCE_TesselateDecalQuad(vec3f_t * point, float size, vec3f_t * normal, vec3f_t * v);
 
-inline void DCE_RenderSubmitHeader(uint32 *src);
+inline void DCE_RenderSubmitHeader(uint32_t *src);
 
 void DCE_SetBlendFunc(unsigned char func);
 
@@ -180,7 +180,7 @@ void DCE_RenderSetDepthCompare(unsigned short mode);
 
 void DCE_RenderSetDepthWrite(unsigned char enable);
 
-void DCE_RenderCheapShadow(uint16 texID, vec3f_t * v, float size);
+void DCE_RenderCheapShadow(uint16_t texID, vec3f_t * v, float size);
 
 void DCE_RenderCheapFlashLight(DCE_Player * player, unsigned short texID,
                                float x1, float x2, float y1, float y2);

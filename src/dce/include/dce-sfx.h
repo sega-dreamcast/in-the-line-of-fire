@@ -86,9 +86,9 @@ typedef struct
 
 void DCE_InitSfx();
 
-void DCE_SfxPlay(uint32 sfx);
+void DCE_SfxPlay(uint32_t sfx);
 
-void DCE_SfxPlayHalfVolume(uint32 sfx);
+void DCE_SfxPlayHalfVolume(uint32_t sfx);
 
 void DCE_SfxStartStreamThread();
 
@@ -98,9 +98,9 @@ void DCE_SfxStreamLoad(char * segment, unsigned char active,
 /* Play A Sound Effect with Attenuating Volume based on Position */
 /* S = Sound Source Position D = Sound Destination Position */
 /* The closer the Distance between S and D, the louder the volme will be */
-void DCE_SfxPlayAttenuation(uint32 sfx, vec3f_t *s, vec3f_t * d);
+void DCE_SfxPlayAttenuation(uint32_t sfx, vec3f_t *s, vec3f_t * d);
 
-void DCE_SfxPlayAttenuationPan(uint32 sfx, vec3f_t *s, vec3f_t * d, float di);
+void DCE_SfxPlayAttenuationPan(uint32_t sfx, vec3f_t *s, vec3f_t * d, float di);
 
 
 void DCE_PlayCDDA(unsigned char track);

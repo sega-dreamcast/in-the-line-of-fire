@@ -10,6 +10,8 @@
 #include <dc/fmath.h>
 #include <dc/vec3f.h>
 
+void vec3f_normalize_c(vec3f_t * v);
+
 #define RAD2DEG (180.0f / F_PI)
 #define RADIAN 0.0174532925   // Convert Degrees to Radians
 #define DEGREE 57.295779515   // Convert Radian To Degree

@@ -16,8 +16,7 @@ void DCE_Init()
     
     DCE_MenuInitOptions("/cd/dce/dce.config");   
 
-#include "pvr_internal.h"
 #define FARZ_CLIP 0.00000001f /* Far Z Clipping - On PVR Smaller Value = Further Clip Pane */
-    pvr_state.zclip = FARZ_CLIP;
+    pvr_set_zclip(FARZ_CLIP);
     PVR_SET(PVR_BGPLANE_Z, FARZ_CLIP);         
 }

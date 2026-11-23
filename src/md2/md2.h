@@ -124,6 +124,8 @@ typedef struct md2_model_t md2_mdl;
 
 md2_mdl * DCE_LoadMD2 (const char *filename);
 
+void DCE_RenderPlayerModelFPPSetMatrix(md2_mdl * md2, unsigned char frame);
+
 md2_mdl * DCE_LoadHQMD2 (const char *filename);	
 
 md2_mdl * DCE_LoadHQMD2Clip(const char *filename);

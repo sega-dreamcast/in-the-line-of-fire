@@ -15,24 +15,24 @@ DCE_Player * DCE_PlayerPointer(unsigned char index)
 
 static char str[64];
 
-static uint8 HACK_ENABLED = 0;
-static uint8 HACK_COMPLETE = 0;
-static uint8 VAULT_CLEAR = 0;
-static uint8 ROOF_CLEAR = 0;
-static uint8 DCE_INSIDE_VEHICLE = 0;
-static uint8 RUN_EXECUTE = 0;
+static uint8_t HACK_ENABLED = 0;
+static uint8_t HACK_COMPLETE = 0;
+static uint8_t VAULT_CLEAR = 0;
+static uint8_t ROOF_CLEAR = 0;
+static uint8_t DCE_INSIDE_VEHICLE = 0;
+static uint8_t RUN_EXECUTE = 0;
 
-static uint64 FPCBT = 0;
-static uint64 DCE_RENDER_FRAME = 0;
+static uint64_t FPCBT = 0;
+static uint64_t DCE_RENDER_FRAME = 0;
 
-static uint8 DCE_GAME_PAUSED = 0;
-static uint8 DCE_GAME_MODE = 2;
-static uint8 DCE_PLAYERS = 2;
+static uint8_t DCE_GAME_PAUSED = 0;
+static uint8_t DCE_GAME_MODE = 2;
+static uint8_t DCE_PLAYERS = 2;
 
-static uint32 DCE_TIMER_START;
-static uint32 DCE_TIMER_TIME;
+static uint32_t DCE_TIMER_START;
+static uint32_t DCE_TIMER_TIME;
 
-static uint8 pc = 0;
+static uint8_t pc = 0;
 
 /******************************************************************************/
 
@@ -59,15 +59,15 @@ void DCE_ResetLevelProgress()
     RUN_EXECUTE = 0;
 }
 
-uint8 DCE_HackEnabled() {
+uint8_t DCE_HackEnabled() {
 	return HACK_ENABLED;
 }
 
-uint8 DCE_VaultIsClear() {
+uint8_t DCE_VaultIsClear() {
 	return VAULT_CLEAR;
 }
 
-uint8 DCE_RoofIsClear() {
+uint8_t DCE_RoofIsClear() {
 	return ROOF_CLEAR;
 }
 
@@ -179,7 +179,7 @@ void DCE_PlayerSetBBox(DCE_Player * player) {
 
 void DCE_PlayerTracePlayerRay(DCE_Player * player)
 {
-	uint8 i, c;
+	uint8_t i, c;
 		
 	DCE_Player * target;
 	
@@ -267,7 +267,7 @@ void DCE_TracePlayerMelee(DCE_Player * player)
 	}
 }
 
-uint8 DCE_PlayerCollisionCheck(DCE_Player * player, vec3f_t * F, vec3f_t * T, uint8 index)
+uint8_t DCE_PlayerCollisionCheck(DCE_Player * player, vec3f_t * F, vec3f_t * T, uint8_t index)
 {
     if(DCE_PlayerCollision(player, &DCE_PLAYER[!index]))
 	{
@@ -294,7 +294,7 @@ uint8 DCE_PlayerCollisionCheck(DCE_Player * player, vec3f_t * F, vec3f_t * T, ui
 	return 0;
 }
 
-void DCE_PlayerFrameCallback(DCE_Player * player, DCE_Camera * cam, uint8 index)
+void DCE_PlayerFrameCallback(DCE_Player * player, DCE_Camera * cam, uint8_t index)
 {
 	DCE_SetCBOIndex(index);
 	
@@ -418,7 +418,7 @@ done:
 	return;
 }
 
-void DCE_RenderMatrixComputeProjection(uint8 index) {
+void DCE_RenderMatrixComputeProjection(uint8_t index) {
 	if(DCE_GAME_MODE == 2) {
 		unsigned short y = index == 0 ? 256 : 0;
 		unsigned short h = index == 0 ? 224 : 256;
@@ -438,7 +438,7 @@ void DCE_RenderMatrixComputeProjection(uint8 index) {
 	DCE_MatrixComputeProjection();
 }
 
-void DCE_RenderCallbackOP(DCE_Player * player, DCE_Camera * cam, float t, uint8 index) {
+void DCE_RenderCallbackOP(DCE_Player * player, DCE_Camera * cam, float t, uint8_t index) {
 	DCE_RenderMatrixComputeProjection(index);
 
 	DCE_MatrixLoadProjection();
@@ -459,7 +459,7 @@ void DCE_RenderCallbackOP(DCE_Player * player, DCE_Camera * cam, float t, uint8 
 		DCE_RenderPlayerLOD(player, &DCE_PLAYER[!index]);
 }
 
-void DCE_RenderCallbackPT(DCE_Player * player, DCE_Camera * cam, float t, uint8 index) {
+void DCE_RenderCallbackPT(DCE_Player * player, DCE_Camera * cam, float t, uint8_t index) {
 	DCE_RenderMatrixComputeProjection(index);
 
 	DCE_MatrixLoadProjection();
@@ -481,14 +481,14 @@ void DCE_RenderMissionState(DCE_Player * player)
 	DCE_RenderSetBlendDst(PVR_BLEND_DESTALPHA);
 	
 	if(!HACK_ENABLED) {
-		DCE_RenderCompileAndSubmitHeader(NULL);
+		DCE_RenderCompileAndSubmitHeader(0);
 		DCE_RenderTexturedQuad2D(16, 16, 368, 32, 0, 0, 0, 0, 0xD0505050);
 		DCE_RenderTexturedQuad2D(16, 40, 392, 56, 0, 0, 0, 0, 0xD0505050);
 
 		DCE_PrintString("MISSION UPDATE: HACK CAMERA TO MARK TARGETS\n", 16, 16);
 		DCE_PrintString("TIP: Hold Left Trigger And Press Left on D-Pad", 16, 40);
 	} else if(!HACK_COMPLETE) {
-		DCE_RenderCompileAndSubmitHeader(NULL);
+		DCE_RenderCompileAndSubmitHeader(0);
 		DCE_RenderTexturedQuad2D(16, 16, 24 + strlen("MISSION UPDATE: USE CAMERA TO MARK TARGETS") * 8,
 		                         32, 0, 0, 0, 0, 0xD0505050);
 		DCE_RenderTexturedQuad2D(16, 40, 24 + strlen("TIP: Use Joypad to Rotate Camera Towards an Enemy") * 8,
@@ -503,7 +503,7 @@ void DCE_RenderMissionState(DCE_Player * player)
 		DCE_PrintString("TIP: Pull Right Trigger to Mark Enemy\n", 16, 64);
 		DCE_PrintString("TIP: Press Start to Execute Marked Enemy Targets\n", 16, 88);
 	} else if(!VAULT_CLEAR) {
-		DCE_RenderCompileAndSubmitHeader(NULL);
+		DCE_RenderCompileAndSubmitHeader(0);
 		DCE_RenderTexturedQuad2D(16, 16, 24 + strlen("MISSION UPDATE: GET TO VAULT TO STOP ROBBERY") * 8,
 		                         32, 0, 0, 0, 0, 0xD0505050);
 
@@ -511,7 +511,7 @@ void DCE_RenderMissionState(DCE_Player * player)
 
 		DCE_VaultClear(player);
 	} else if(!ROOF_CLEAR) {
-		DCE_RenderCompileAndSubmitHeader(NULL);
+		DCE_RenderCompileAndSubmitHeader(0);
 		DCE_RenderTexturedQuad2D(16, 16, 24 + strlen("MISSION UPDATE: BOMBS PLANTED IN VAULT! GET TO ROOF TO STOP ROBBERY") * 8,
 		                         32, 0, 0, 0, 0, 0xD0505050);
 
@@ -523,7 +523,7 @@ void DCE_RenderMissionState(DCE_Player * player)
 	}
 }
 
-void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8 index) {
+void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8_t index) {
 	DCE_RenderMatrixComputeProjection(index);
 
 	DCE_MatrixLoadProjection();
@@ -573,7 +573,7 @@ void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8 
 		    
 		    sprintf(str, "%i / %i\n", player->clip, player->ammo);					
 				    
-		    DCE_RenderCompileAndSubmitHeader(NULL);
+		    DCE_RenderCompileAndSubmitHeader(0);
 		    DCE_RenderTexturedQuad2D(500, 480-32, 500 + strlen(str) * 8, 480-16, 0, 0, 0, 0, 0xD0505050);
 		       
 		    DCE_PrintString(str, 500, 480 - 32);
@@ -599,7 +599,7 @@ void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8 
 
 	        sprintf(str, "%i / %i\n", player->clip, player->ammo);
 
-	        DCE_RenderCompileAndSubmitHeader(NULL);
+	        DCE_RenderCompileAndSubmitHeader(0);
 	        DCE_RenderTexturedQuad2D(x, y, x + strlen(str) * 8, y + 16, 0, 0, 0, 0, 0xD0505050);
 		    	    
 	        DCE_PrintString(str, x, y);		
@@ -608,7 +608,7 @@ void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8 
 
 	if(player->health < 100)
 	{
-		uint8 alpha = 255 - ((player->health * 255) / 100);
+		uint8_t alpha = 255 - ((player->health * 255) / 100);
 
 		DCE_RenderCompileAndSubmitHeaderTextured(PVR_LIST_OP_POLY, DCE_TexID(DCE_TEXID_SPLATTER), PVR_TXRENV_REPLACE);
 
@@ -630,13 +630,13 @@ void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8 
     
 	if(DCE_GAME_MODE == 2)
     {
-        uint32 r = (DCE_TIMER_START + DCE_TIMER_TIME) - DCE_GetTime();
-        uint8 min = r / 60000;
+        uint32_t r = (DCE_TIMER_START + DCE_TIMER_TIME) - DCE_GetTime();
+        uint8_t min = r / 60000;
         float y;
     
         r -= min * 60000;
     
-        uint8 sec = r / 1000;
+        uint8_t sec = r / 1000;
 
         if(player == &DCE_PLAYER[0])
 		    y = 16;
@@ -653,19 +653,19 @@ void DCE_RenderCallbackTR(DCE_Player * player, DCE_Camera * cam, float t, uint8 
 
     	DCE_RenderSetBlendDst(PVR_BLEND_DESTALPHA);
         
-        DCE_RenderCompileAndSubmitHeader(NULL);
+        DCE_RenderCompileAndSubmitHeader(0);
         DCE_RenderTexturedQuad2D(320 - (strlen(str) * 4), y, 320 + strlen(str) * 4, y + 16, 0, 0, 0, 0, 0xD0505050);
 		DCE_PrintString(str, 320 - (strlen(str) * 4), y);        
 		
 		sprintf(str, "%.0f\n", player->health);
 		 
-		DCE_RenderCompileAndSubmitHeader(NULL);
+		DCE_RenderCompileAndSubmitHeader(0);
 		DCE_RenderTexturedQuad2D(32, y, 32 + strlen(str) * 8, y + 16, 0, 0, 0, 0, 0xD0505050);
         DCE_PrintString(str, 32, y);
 
 		sprintf(str, "KILLS: %i\n", DCE_PLAYER[index].hud_health[3]);
 		 
-		DCE_RenderCompileAndSubmitHeader(NULL);
+		DCE_RenderCompileAndSubmitHeader(0);
 		DCE_RenderTexturedQuad2D(512, y, 512 + strlen(str) * 8, y + 16, 0, 0, 0, 0, 0xD0505050);
         DCE_PrintString(str, 512, y);
   	}
@@ -736,7 +736,7 @@ void DCE_RenderCallback(DCE_Player * player, DCE_Camera * cam, float t) {
 
 int DCE_RunRBO()
 {
-	uint8 i;
+	uint8_t i;
 	DCE_Camera cam;
 
 	cam.pos.x = -10;
@@ -822,7 +822,7 @@ int DCE_RunRBO()
             DCE_RenderEnableScissor(DCE_GAME_MODE - 1);
             
             if(r == 2)
-			    return;				
+			    return 0;				
 		}
 		
 		if(DCE_GAME_MODE == 1) //== Enemy Routine Callback ==================//
@@ -840,7 +840,7 @@ int DCE_RunRBO()
         {
         	DCE_RenderEnableScissor(0);
         	
-        	DCE_RenderCompileAndSubmitHeader(NULL);
+        	DCE_RenderCompileAndSubmitHeader(0);
 
 	        DCE_RenderTexturedQuad2D(0, 224, 640, 228,
 	                         0, 0, 1, 1, 0x0000000F);
@@ -883,7 +883,7 @@ int DCE_RunRBO()
 		
 		if(DCE_GAME_MODE == 2)
 		{
-			uint8 i;
+			uint8_t i;
 			for(i = 0; i < DCE_PLAYERS; i++)
 			if(DCE_PLAYER[i].health == 0 && DCE_PLAYER[i].state_frame >= 150)
 			{

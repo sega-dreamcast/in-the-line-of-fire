@@ -20,15 +20,15 @@ static md2_mdl * swat_deagle;
 static md2_mdl * muzflash;
 static md2_mdl * muzflash2;
 
-static uint16 swat_tex;
-static uint16 swat_hands_tex;
-static uint16 blood_tex;
+static uint16_t swat_tex;
+static uint16_t swat_hands_tex;
+static uint16_t blood_tex;
 
-static uint16 backer_legs, backer_torso, backer_head;
+static uint16_t backer_legs, backer_torso, backer_head;
 
 static md2_mdl * clown_hands;
 
-static uint16 clown_hands_tex;
+static uint16_t clown_hands_tex;
 
 md2_mdl * DCE_MuzzleflashModel()
 {

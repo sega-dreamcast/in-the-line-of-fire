@@ -7,8 +7,8 @@
 #include <kos.h>
 #include "spu_wave.h"
 
-static uint32 fd;
-static uint16 sound_buffer[65536];
+static uint32_t fd;
+static uint16_t sound_buffer[65536];
 static snd_stream_hnd_t shnd;
 
 int wave_restart() {
@@ -63,8 +63,8 @@ void spu_wave_stream_stop( )
 
 int spu_wave_stream_start( char * file_name )
 {
-	uint32	len, hz;
-	uint16	chn, bitsize, fmt;
+	uint32_t	len, hz;
+	uint16_t	chn, bitsize, fmt;
 
     snd_stream_init();
 	   
