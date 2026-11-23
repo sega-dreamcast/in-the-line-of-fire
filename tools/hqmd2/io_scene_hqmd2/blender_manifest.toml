@@ -1,0 +1,17 @@
+schema_version = "1.0.0"
+
+id = "io_scene_hqmd2"
+version = "1.0.0"
+name = "HQMD2 format (In The Line Of Fire)"
+tagline = "Import/export the 16-bit MD2 variant used by the In The Line Of Fire engine"
+maintainer = "In The Line Of Fire contributors"
+type = "add-on"
+
+blender_version_min = "4.2.0"
+
+license = ["SPDX:GPL-3.0-or-later"]
+
+tags = ["Import-Export"]
+
+[permissions]
+files = "Import/export HQMD2 model files"
